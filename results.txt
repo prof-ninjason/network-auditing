@@ -1,0 +1,11 @@
+# Nmap 7.80 scan initiated Tue Apr 18 21:28:00 2023 as: nmap -sC -sV --script=csv_output.nse -oN results.txt 192.168.0.0/16
+NSE: failed to initialize the script engine:
+/usr/bin/../share/nmap/nse_main.lua:614: could not load script
+stack traceback:
+	[C]: in function 'error'
+	/usr/bin/../share/nmap/nse_main.lua:614: in field 'new'
+	/usr/bin/../share/nmap/nse_main.lua:823: in local 'get_chosen_scripts'
+	/usr/bin/../share/nmap/nse_main.lua:1310: in main chunk
+	[C]: in ?
+
+QUITTING!
