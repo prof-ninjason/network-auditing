@@ -1,0 +1,35 @@
+To create an NMap script that outputs to a CSV file, you can use the NMap NSE (NMap Scripting Engine) and its built-in "csv" library. Here's an example script that scans a target IP address and outputs the results to a CSV file:
+
+lua
+Copy code
+-- nmap_csv_output.nse
+-- Usage: nmap -sC -sV --script=nmap_csv_output.nse -oN results.txt <target>
+
+local csv = require "csv"
+
+-- Define the output format
+local fields = {"host", "port", "protocol", "state", "service", "version"}
+
+-- Initialize the output CSV file
+local csvfile = assert(io.open("nmap_results.csv", "w"))
+csvfile:write(csv.generate_header(fields))
+
+-- Define the function to handle each result
+local function process_result(host, port, protocol, state, service, version)
+  local row = {host.ip, port.number, protocol, state, service.name, version}
+  csvfile:write(csv.generate_line(fields, row))
+end
+
+-- Register the script with NMap
+local nmap_csv_output = {}
+nmap_csv_output["portrule"] = function(host, port)
+  process_result(host, port, port.protocol, port.state, port.service, port.version)
+end
+
+To run the script, save it to a file named "nmap_csv_output.nse" in your NMap scripts directory (usually /usr/share/nmap/scripts/).
+
+# How to use Nmap CSV out
+
+nmap -sC -sV --script=nmap_csv_output.nse -oN results.txt <target>
+
+This will scan the target IP address, run the "nmap_csv_output" script, and output the results to both a text file ("results.txt") and a CSV file ("nmap_results.csv").
